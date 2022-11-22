@@ -4,9 +4,18 @@
 {% block content %}
 
 <div class="position-relative d-flex mt-4" style="height: 85vh">
-    <div class="d-flex justify-content-center align-items-center" style="z-index: -1; height: 100%; width: 50%; overflow: hidden">
-        <img style="z-index: -1; object-fit: cover; width: 80%; height: 80%" src="{% static 'ana/media/building.svg' %}" alt="building" />
-    </div>
+    {%if flag == 1%}
+        <div class="d-flex justify-content-center align-items-center" style="z-index: -1; height: 100%; width: 50%; overflow: hidden">
+            <img style="z-index: -1; object-fit: cover; width: 80%; height: 80%" src="{% static 'ana/media/building.svg' %}" alt="building" />
+        </div>
+    {%endif%}
+
+    {%if flag == 2%}
+        <div class="d-flex justify-content-center align-items-center" style="z-index: -1; height: 100%; width: 30%; overflow: hidden">
+            <img style="z-index: -1; object-fit: contain; width: 80%; height: 80%" src="{% static 'ana/media/building.svg' %}" alt="building" />
+        </div>
+    {%endif%}
+
     {%if flag == 1 %}
     <div style="width: 50%; overflow-y: scroll">
         <p class="h3 mb-4">Provide the following details</p>
@@ -68,6 +77,35 @@
             </div> {% endcomment %}
         </form>
     </div>
+    {%endif%}
+    {%if flag == 2%}
+        <div style="width: 70%; overflow-y: scroll" class="d-flex justify-content-center align-items-center">
+            <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Property</th>
+                    <th scope="col">Value</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">1</th>
+                    <td>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magni, nisi.</td>
+                    <td>Otto</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">2</th>
+                    <td>Jacob</td>
+                    <td>Thornton</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">3</th>
+                    <td colspan="2">Larry the Bird</td>
+                  </tr>
+                </tbody>
+              </table>
+        </div>
     {%endif%}
 </div>
 
