@@ -11,7 +11,7 @@
     {%endif%}
 
     {%if flag == 2%}
-        <div class="d-flex justify-content-center align-items-center" style="z-index: -1; height: 100%; width: 30%; overflow: hidden">
+        <div class="d-flex justify-content-center align-items-center position-absolute " style="left:50%; top:50%; transform:translate(-50%,-50%); opacity:0.15; z-index: -1; height: 100%; width: 30%; overflow: hidden">
             <img style="z-index: -1; object-fit: contain; width: 80%; height: 80%" src="{% static 'ana/media/building.svg' %}" alt="building" />
         </div>
     {%endif%}
@@ -45,12 +45,12 @@
                  </select>
             </div>
             <div class="form-group mb-4">
-                <label class="text-secondary h6" for="Z" class="form-label">Select Seismic zone (Z)</label>
-                <select class="form-select" id="Z" name="Z">
-                   <option value="0.1">Low ( ZONE II )</option>
-                   <option value="0.16">Moderate ( ZONE III )</option>
-                   <option value="0.24">Severe ( ZONE IV )</option>
-                   <option value="0.36">Very severe( ZONE V )</option>
+                <label class="text-secondary h6" for="z" class="form-label">Select Seismic zone (Z)</label>
+                <select class="form-select" id="z" name="z">
+                   <option value="2">Low ( ZONE II )</option>
+                   <option value="3">Moderate ( ZONE III )</option>
+                   <option value="4">Severe ( ZONE IV )</option>
+                   <option value="5">Very severe( ZONE V )</option>
                 </select>
            </div>
            <div class="form-group mb-4">
@@ -63,14 +63,14 @@
             </div>
             <div class="form-group mb-4">
                 <label class="text-secondary h6" for="stories">Provide Seismic Weights of each floor in KN</label>
-                <textarea name="floor_weights" id="floor_weights" rows="3"></textarea>
+                <textarea class="form-control" name="floor_weights" id="floor_weights" rows="3"></textarea>
             </div>
             <div class="form-group mb-4">
                 <label class="text-secondary h6" for="stories">Please provide heights of each floor measured from base</label>
-                <textarea name="floor_heights" id="floor_heights" rows="3"></textarea>
+                <textarea class="form-control" name="floor_heights" id="floor_heights" rows="3"></textarea>
             </div>
             <div class="form-group mb-4">
-                <button type="submit" class="btn btn-primary mb-4">Analyse</button>
+                <button type="submit" class="btn btn-primary mb-4">Compute</button>
             </div>
             {% comment %} <div>
                 <input class="form-control" type="text" value="{{name}}"/>
@@ -79,7 +79,8 @@
     </div>
     {%endif%}
     {%if flag == 2%}
-        <div style="width: 70%; overflow-y: scroll" class="d-flex justify-content-center align-items-center">
+        <div style="width: 100%; overflow-y: scroll" class="d-flex justify-content-center">
+            {% comment %} <p class="h3 mb-4">All calculations and values are taken from 'IS 1893 part I 2002</p> {% endcomment %}
             <table class="table table-hover">
                 <thead>
                   <tr>
@@ -91,18 +92,71 @@
                 <tbody>
                   <tr>
                     <th scope="row">1</th>
-                    <td>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magni, nisi.</td>
-                    <td>Otto</td>
+                    <td>Provided height of building (in m)</td>
+                    <td>{{height}}</td>
                   </tr>
                   <tr>
                     <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
+                    <td>Provided base dimension of the building at plinth level (in m)</td>
+                    <td>{{base_d}}</td>
                   </tr>
                   <tr>
                     <th scope="row">3</th>
-                    <td colspan="2">Larry the Bird</td>
+                    <td>Natural period of vibration for a moment resisting frame without infill (in sec)</td>
+                    <td>{{vib_winfill}}</td>
                   </tr>
+                  <tr>
+                    <th scope="row">4</th>
+                    <td>Natural period of vibration for a moment resisting frame with infill (in sec)</td>
+                    <td>{{vib_infill}}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">5</th>
+                    <td>As our site is in zone {{z_}} ,therefore zone factor Z</td>
+                    <td>{{Z}}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">6</th>
+                    <td>Importance Factor I</td>
+                    <td>{{I}}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">7</th>
+                    <td>Assuming Ductile detailing for the structure, Response Reduction Factor R</td>
+                    <td>{{R}}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">8</th>
+                    <td>The Spectral acceleration coefficient (Sa/g) of site</td>
+                    <td>{{Sa_g}}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">9</th>
+                    <td >Horizontal seismic coefficient (A_h)</td>
+                    <td>{{A_h}}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">10</th>
+                    <td >Vertical seismic coefficient</td>
+                    <td>{{V_h}}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">11</th>
+                    <td >Provided seismic weight of entire building (in KN)</td>
+                    <td>{{weight}}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">12</th>
+                    <td >Design base shear V_b (in KN)</td>
+                    <td>{{V_b}}</td>
+                  </tr>
+                  {% for i in lfi %}
+                  <tr>
+                    <th scope="row">{{i.0|add:12}}</th>
+                    <td >Design lateral Force at floor {{i.0}} (in KN)</td>
+                    <td>{{i.1}}</td>
+                  </tr>
+                  {% endfor %}
                 </tbody>
               </table>
         </div>

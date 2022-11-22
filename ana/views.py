@@ -2,6 +2,16 @@ from django.shortcuts import render
 import math
 # Create your views here.
 
+def findz(z):
+    if z == 2:
+        Z = 0.1
+    elif z == 3:
+        Z = 0.16
+    elif z == 4:
+        Z = 0.24
+    elif z == 5:
+        Z = 0.36
+    return Z
 
 def sa_g(t, soil):
     sa_g = 2.50
@@ -39,7 +49,8 @@ def home(request):
         height = float(request.POST["height"])
         base_d = float(request.POST["height"])
         I = float(request.POST["I"])
-        Z = float(request.POST["Z"])
+        _z = int(request.POST["z"])
+        Z = findz(_z)
         soil = int(request.POST["soil"])
         weight = float(request.POST["weight"])
         stories = int(request.POST["stories"])
@@ -62,20 +73,23 @@ def home(request):
         lfi = []
 
         for i in range(stories):
-            lfi.append(
-                (V_b*floor_weights[i]*floor_heights[i]*floor_heights[i])/wh)
+            lfi.append([i+1,(V_b*floor_weights[i]*floor_heights[i]*floor_heights[i])/wh])
 
         data = {
+            "height":height,
+            "base_d":base_d,
             "vib_winfill": vib_winfill,
             "vib_infill": vib_infill,
+            "z_": _z,
             "Z": Z,
+            "R":R,
             "I": I,
             "Sa_g": Sa_g,
             "A_h": A_h,
             "V_h": V_h,
             "weight": weight,
             "V_b": V_b,
-            "stories": stories,
+            "stories": range(stories),
             "lfi": lfi,
             "flag": 2,
         }
