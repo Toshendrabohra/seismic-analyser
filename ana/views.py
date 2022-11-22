@@ -31,7 +31,9 @@ def sa_g(t, soil):
 
 
 def home(request):
-    data = {"flag": None}
+    data = {
+        "flag": 1
+    }
 
     if request.method == "POST":
         height = float(request.POST["height"])
@@ -75,7 +77,7 @@ def home(request):
             "V_b": V_b,
             "stories": stories,
             "lfi": lfi,
-            "flag": True
+            "flag": 2,
         }
 
         return render(request, 'home.html', data)
