@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="container-fluid d-flex flex-column justify-content-center align-items-center">
+    {% comment %} <img src="{% static 'b.png' %}" alt="building" /> {% endcomment %}
+    {%if flag == None %}
+    <p class="h3 mb-4">Provide the following details</p>
+    <form style="width: 40%;" class="d-flex flex-column" action="{% url "home" %}" method="POST"> 
+        {% csrf_token %}
+        <div class="form-group mb-4">
+            <label class="text-secondary h6" for="height">Provide height of building (in m)</label>
+            <input class="form-control" id="height" type="number" name="height">
+        </div>
+        <div class="form-group mb-4">
+            <label class="text-secondary h6" for="base-dim">Provide base dimension of the building at plinth level (in m)</label>
+            <input class="form-control" id="base_d" type="number" name="base_d">
+        </div>
+        <div class="form-group mb-4">
+            <label class="text-secondary h6" for="soil" class="form-label">Select Type of Soil</label>
+                <select class="form-select" id="soil" name="soil">
+                    <option value="0">Rock or Hard Soil</option>
+                    <option value="1">Medium Soil</option>
+                    <option value="2">Soft Soil</option>
+                </select>
+        </div>
+        <div class="form-group mb-4">
+             <label class="text-secondary h6" for="I" class="form-label">Select Type of Building to determine Importance Factor (I)</label>
+             <select class="form-select" id="I" name="I">
+                <option value="1.5">Important service and community building (I = 1.5)</option>
+                <option value="1.0">All other type of buildings (I = 1.0)</option>
+             </select>
+        </div>
+        <div class="form-group mb-4">
+            <label class="text-secondary h6" for="Z" class="form-label">Select Seismic zone (Z)</label>
+            <select class="form-select" id="Z" name="Z">
+               <option value="0.1">Low ( ZONE II )</option>
+               <option value="0.16">Moderate ( ZONE III )</option>
+               <option value="0.24">Severe ( ZONE IV )</option>
+               <option value="0.36">Very severe( ZONE V )</option>
+            </select>
+       </div>
+       <div class="form-group mb-4">
+            <label class="text-secondary h6" for="weight">Provide seismic weight of entire building (in KN)</label>
+            <input class="form-control" id="weight" type="number" name="weight">
+        </div>
+        <div class="form-group mb-4">
+            <label class="text-secondary h6" for="stories">Please provide number of stories in the bulding</label>
+            <input class="form-control" id="stories" type="number" name="stories">
+        </div>
+        <div class="form-group mb-4">
+            <label class="text-secondary h6" for="stories">Provide Seismic Weights of each floor in KN</label>
+            <textarea name="floor_weights" id="floor_weights" rows="3"></textarea>
+        </div>
+        <div class="form-group mb-4">
+            <label class="text-secondary h6" for="stories">Please provide heights of each floor measured from base</label>
+            <textarea name="floor_heights" id="floor_heights" rows="3"></textarea>
+        </div>
+        <div class="form-group mb-4">
+            <button type="submit" class="btn btn-primary mb-4">Analyse</button>
+        </div>
+        {% comment %} <div>
+            <input class="form-control" type="text" value="{{name}}"/>
+        </div> {% endcomment %}
+    </form>
+    {%endif%}
+</div>
+
+{% endblock content %}
