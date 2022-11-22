@@ -1,0 +1,1 @@
+web: gunicorn seismic_analysis.wsgi --log-file -
