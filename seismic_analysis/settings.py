@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-9#07z9f_ysh)2c@lgzst@nh0kq_bd1fl0u43)^1qzbd21f%6nc
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['seismic-analysis.gigalixirapp.com','0.0.0.0', '127.0.0.1', 'localhost']
 
 
 # Application definition
